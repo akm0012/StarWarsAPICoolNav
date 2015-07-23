@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.mobiquity.amarshall.starwarscoolnav"
-        minSdkVersion 21
+        minSdkVersion 19
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
@@ -21,6 +21,7 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:support-v4:22.2.0'
+    compile 'com.android.support:support-v4:22.2.1'
     compile 'org.apache.directory.studio:org.apache.commons.io:2.4'
+    compile 'com.android.support:support-v13:22.2.1'
 }

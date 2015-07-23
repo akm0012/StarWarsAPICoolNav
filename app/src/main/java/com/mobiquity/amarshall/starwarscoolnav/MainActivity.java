@@ -18,9 +18,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.mobiquity.amarshall.starwarscoolnav.objects.StarWarsTask;
+
 
 public class MainActivity extends Activity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, DisplayNameListener {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -45,6 +47,9 @@ public class MainActivity extends Activity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
+        StarWarsTask starWarsTask = new StarWarsTask(this);
+        starWarsTask.execute();
     }
 
     @Override
@@ -110,6 +115,15 @@ public class MainActivity extends Activity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void set_names(String[] names) {
+
+        //TODO: Make this an interface
+        ((NavigationDrawerFragment) getFragmentManager()
+                .findFragmentById(R.id.navigation_drawer)).refresh_name_list(names);
+
     }
 
     /**

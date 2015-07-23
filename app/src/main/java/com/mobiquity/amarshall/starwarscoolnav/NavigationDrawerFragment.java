@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,6 +22,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -57,6 +60,9 @@ public class NavigationDrawerFragment extends Fragment {
     private int mCurrentSelectedPosition = 0;
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
+
+    private ArrayAdapter<String> nameAdapter;
+    private ArrayList<String> mNameArrayList;
 
     public NavigationDrawerFragment() {
     }
@@ -98,22 +104,30 @@ public class NavigationDrawerFragment extends Fragment {
             }
         });
 
-        //TODO: Asynk Task to get names
+        mNameArrayList = new ArrayList<>();
 
-        mDrawerListView.setAdapter(new ArrayAdapter<String>(
+        nameAdapter = new ArrayAdapter<String>(
                 getActionBar().getThemedContext(),
                 android.R.layout.simple_list_item_activated_1,
                 android.R.id.text1,
+                mNameArrayList);
 
-                //TODO: Change this to Star Wars Names
-                new String[]{
-                        "Luke",
-                        "Bob",
-                        "Andrew",
-                }));
+        mDrawerListView.setAdapter(nameAdapter);
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;
     }
+
+    public void refresh_name_list(String[] _newNames) {
+        Log.d("tag", "(refresh_name_list)");
+
+        for (int i = 0; i < _newNames.length; i++) {
+            nameAdapter.add(_newNames[i]);
+        }
+
+        nameAdapter.notifyDataSetChanged();
+
+    }
+
 
     public boolean isDrawerOpen() {
         return mDrawerLayout != null && mDrawerLayout.isDrawerOpen(mFragmentContainerView);
