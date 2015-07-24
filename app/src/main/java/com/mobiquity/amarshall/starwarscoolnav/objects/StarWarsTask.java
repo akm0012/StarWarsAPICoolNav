@@ -1,5 +1,6 @@
 package com.mobiquity.amarshall.starwarscoolnav.objects;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -30,11 +31,7 @@ public class StarWarsTask extends AsyncTask<Void, Void, String[]> {
     private boolean mDoneLoadingPage;
     private ArrayList<String> mNameList;
     private int page_counter = 1;
-
-    public interface StarWarsListener {
-        public void set_name_list(String data);
-
-    }
+    private ProgressDialog mProgressDialog;
 
     public StarWarsTask(Context _context) {
 
@@ -44,10 +41,22 @@ public class StarWarsTask extends AsyncTask<Void, Void, String[]> {
     }
 
     @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+
+        mProgressDialog = new ProgressDialog(mContext);
+        mProgressDialog.setMessage("Downloading Data from the Death Star...");
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        mProgressDialog.setMax(9);
+        mProgressDialog.show();
+
+    }
+
+    @Override
     protected String[] doInBackground(Void... num) {
         Log.i("tag", "Starting Async Task A.");
 
-        String[] test = {"hi"};
+        String[] test = {"nothing"};
 
         return test;
     }
@@ -71,6 +80,7 @@ public class StarWarsTask extends AsyncTask<Void, Void, String[]> {
                     nameArr = mNameList.toArray(nameArr);
                     ((DisplayNameListener) mContext).set_names(nameArr);
                 }
+                mProgressDialog.dismiss();
                 return;
             } else {
                 // Spin up a new thread and get the next page
@@ -78,10 +88,10 @@ public class StarWarsTask extends AsyncTask<Void, Void, String[]> {
                 getNameTask.execute("" + page_counter);
 
                 page_counter++;
+                mProgressDialog.setProgress(page_counter);
 
             }
         }
-
 
     }
 

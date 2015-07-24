@@ -29,6 +29,8 @@ public class MainActivity extends Activity
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
 
+    private String[] name_list;
+
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
@@ -47,7 +49,11 @@ public class MainActivity extends Activity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
         StarWarsTask starWarsTask = new StarWarsTask(this);
         starWarsTask.execute();
     }
@@ -77,8 +83,11 @@ public class MainActivity extends Activity
 //                break;
 //        }
 
-        mTitle = "" + number;
-
+        if (name_list == null) {
+            mTitle = "Loading Names...";
+        } else {
+            mTitle = name_list[number];
+        }
     }
 
     public void restoreActionBar() {
@@ -88,41 +97,16 @@ public class MainActivity extends Activity
         actionBar.setTitle(mTitle);
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        if (!mNavigationDrawerFragment.isDrawerOpen()) {
-            // Only show items in the action bar relevant to this screen
-            // if the drawer is not showing. Otherwise, let the drawer
-            // decide what to show in the action bar.
-            getMenuInflater().inflate(R.menu.main, menu);
-            restoreActionBar();
-            return true;
-        }
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     @Override
     public void set_names(String[] names) {
 
-        //TODO: Make this an interface
-        ((NavigationDrawerFragment) getFragmentManager()
-                .findFragmentById(R.id.navigation_drawer)).refresh_name_list(names);
+        Fragment frag =  getFragmentManager()
+                .findFragmentById(R.id.navigation_drawer);
+
+        if (frag instanceof DisplayNameListener) {
+            ((NavigationDrawerFragment) frag).set_names(names);
+            name_list = names;
+        }
 
     }
 
