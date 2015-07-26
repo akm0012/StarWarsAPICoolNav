@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/StarWarsAPICoolNav.iml" filepath="$PROJECT_DIR$/StarWarsAPICoolNav.iml" />
+      <module fileurl="file://$PROJECT_DIR$/StarWarsCoolNav.iml" filepath="$PROJECT_DIR$/StarWarsCoolNav.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
