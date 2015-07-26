@@ -16,6 +16,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final String ENTRY_TABLE = "people";
     public static final String COLUMN_ID = "_id";
+    public static final String COLUMN_API_ID = "api_id";
     public static final String COLUMN_NAME = "name";
     public static final String COLUMN_HEIGHT = "height";
     public static final String COLUMN_MASS = "mass";
@@ -30,6 +31,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String CREATE_TABLE_ENTRYS = "CREATE TABLE IF NOT EXISTS " + ENTRY_TABLE + "(" +
             COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT" + ", " +
+            COLUMN_API_ID + " TEXT NOT NULL" + ", " +
             COLUMN_NAME + " TEXT NOT NULL" + ", " +
             COLUMN_HEIGHT + " TEXT NOT NULL" + ", " +
             COLUMN_MASS + " TEXT NOT NULL" + ", " +
@@ -38,7 +40,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             COLUMN_EYE_COLOR + " TEXT NOT NULL" + ", " +
             COLUMN_BIRTH_YEAR + " TEXT NOT NULL" + ", " +
             COLUMN_GENDER + " TEXT NOT NULL" + ", " +
-            COLUMN_URL + " TEXT NOT NULL";
+            COLUMN_URL + " TEXT NOT NULL" + ")";
 
     public DatabaseHelper(Context _context) {
         super(_context, DATABASE_FILE, null, DATABASE_VERSION);
@@ -46,6 +48,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+
+        db.execSQL(CREATE_TABLE_ENTRYS);
 
     }
 
